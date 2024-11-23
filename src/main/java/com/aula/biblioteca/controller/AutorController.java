@@ -23,20 +23,38 @@ public class AutorController {
 
     private final AutorService autorService;
 
-    @Operation(summary = "listar todos os autores", description = "listar autores com paginação da base de dados")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "retorna autores", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class))),})
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<AutorDTO>> findAll(@PageableDefault(size = 5) Pageable pageable) {
-        return ResponseEntity.ok(autorService.findAll(pageable));
+    @Operation(summary = "cria um novo autor", description = "criar um novo autor")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AutorDTO> create(@Parameter(required = true) @RequestBody AutorDTO autorDTO) {
+        return ResponseEntity.ok(autorService.create(autorDTO));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AutorDTO> read(@PathVariable String id) {
+        return ResponseEntity.ok(autorService.read(id));
+    }
+
+    @Operation(summary = "atualizar um autor", description = "atualizar um autor buscando por id")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AutorDTO> update(@Parameter(required = true) @RequestBody AutorDTO autorDTO) {
         return ResponseEntity.ok(autorService.update(autorDTO.id(), autorDTO));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AutorDTO> save(@Parameter(required = true) @RequestBody AutorDTO autorDTO) {
-        return ResponseEntity.ok(autorService.save(autorDTO));
+    @Operation(summary = "apagar autor", description = "apagar um autor buscando por id")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        autorService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "listar todos os autores", description = "listar autores com paginação da base de dados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "retorna autores",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class)))
+    })
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<AutorDTO>> readAll(@PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok(autorService.findAll(pageable));
     }
 }
+
