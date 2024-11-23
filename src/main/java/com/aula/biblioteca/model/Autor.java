@@ -20,7 +20,7 @@ public class Autor {
     private String id;
     private String nome;
     private String email;
-    
+
     @JsonIgnore
     @DBRef
     private List<Livro> livros;
