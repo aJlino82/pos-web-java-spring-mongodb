@@ -29,6 +29,7 @@ public class AutorController {
         return ResponseEntity.ok(autorService.create(autorDTO));
     }
 
+    @Operation(summary = "ler autor", description = "ler autor buscando pelo id")
     @GetMapping("/{id}")
     public ResponseEntity<AutorDTO> read(@PathVariable String id) {
         return ResponseEntity.ok(autorService.read(id));
