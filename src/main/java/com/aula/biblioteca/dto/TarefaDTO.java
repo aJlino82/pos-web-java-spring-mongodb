@@ -14,9 +14,21 @@ public record TarefaDTO
                 @NotBlank String descricao,
                 @NotBlank LocalDate dataCriacao,
                 @NotBlank String prioridade,
+                @NotBlank Boolean concluida,
+                @NotBlank LocalDate dataConclusao,
                 List<Usuario> usuarios
         ) {
     public TarefaDTO(Tarefa tarefa) {
-        this(tarefa.getId(), tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getDataCriacao(), tarefa.getPrioridade(), tarefa.getUsuarios());
+        this
+                (
+                        tarefa.getId(),
+                        tarefa.getTitulo(),
+                        tarefa.getDescricao(),
+                        tarefa.getDataCriacao(),
+                        tarefa.getPrioridade(),
+                        tarefa.getConcluida(),
+                        tarefa.getDataConclusao(),
+                        tarefa.getUsuarios()
+                );
     }
 }

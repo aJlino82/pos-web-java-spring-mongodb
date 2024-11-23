@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -33,12 +34,25 @@ public class TarefaService {
     }
 
     public void delete(String id) {
-        findTarefaById(id);
-        tarefaRepository.deleteById(id);
+        Tarefa tarefa = findTarefaById(id);
+        tarefa.setConcluida();
+        tarefaRepository.save(tarefa);
     }
 
     public Page<TarefaDTO> findAll(Pageable pageable) {
         return tarefaRepository.findAll(pageable).map(TarefaDTO::new);
+    }
+
+    public List<Tarefa> findAtivas() {
+        return tarefaRepository.findByConcluidaFalse();
+    }
+
+    public List<Tarefa> findConcluida() {
+        return tarefaRepository.findByConcluidaTrue();
+    }
+
+    public List<Tarefa> findByUsuariosAndConcluidaTrue(String id) {
+        return tarefaRepository.findByUsuariosAndConcluidaTrue(id);
     }
 
     // Metodo utilitário privado para reduzir repetição de código.
@@ -46,4 +60,5 @@ public class TarefaService {
         return tarefaRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Autor com ID '" + id + "' não encontrado"));
     }
+
 }

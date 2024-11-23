@@ -23,7 +23,7 @@ public class LivroController {
 
     private final LivroService livroService;
 
-    @Operation(summary = "Salvar livro", description = "Adiciona um novo livro na base de dados.")
+    @Operation(summary = "salvar livro", description = "Adiciona um novo livro na base de dados.")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LivroDTO> create(@Parameter(required = true) @RequestBody LivroDTO livroDTO) {
         return ResponseEntity.ok(livroService.save(livroDTO));

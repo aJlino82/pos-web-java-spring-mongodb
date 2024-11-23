@@ -15,4 +15,11 @@ public interface TarefaRepository extends MongoRepository<Tarefa, String> {
 
     @Query("{'dataCriacao': {'$gte': ?0, '$lte': ?1}}")
     List<Tarefa> findByDataCriacaoBetween(LocalDate dataInicio, LocalDate dataFim);
+
+    List<Tarefa> findByConcluidaFalse();
+
+    List<Tarefa> findByConcluidaTrue();
+
+    List<Tarefa> findByUsuariosAndConcluidaTrue(String id);
+
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Data
 @Document(collection = "tarefas")
 public class Tarefa {
@@ -26,12 +28,29 @@ public class Tarefa {
     @CreatedDate()
     private LocalDate dataCriacao;
     private String prioridade;
+    private Boolean concluida;
+    private LocalDate dataConclusao;
 
     @JsonIgnore
     @DBRef
     List<Usuario> usuarios;
 
     public static Tarefa fromDTO(TarefaDTO dto) {
-        return new Tarefa(null, dto.titulo(), dto.descricao(), dto.dataCriacao(), dto.prioridade(), dto.usuarios());
+        return new Tarefa
+                (
+                        null,
+                        dto.titulo(),
+                        dto.descricao(),
+                        dto.dataCriacao(),
+                        dto.prioridade(),
+                        dto.concluida(),
+                        dto.dataConclusao(),
+                        dto.usuarios()
+                );
+    }
+
+    public void setConcluida() {
+        this.concluida = true;
+        this.dataConclusao = LocalDate.now();
     }
 }
