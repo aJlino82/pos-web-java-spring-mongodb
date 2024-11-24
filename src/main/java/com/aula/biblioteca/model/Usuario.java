@@ -2,7 +2,7 @@ package com.aula.biblioteca.model;
 
 
 import com.aula.biblioteca.dto.UsuarioDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,8 +27,8 @@ public class Usuario {
     private String email;
     private String telefone;
 
-    @JsonIgnore
-    @DBRef
+    @JsonIgnoreProperties("usuarios")
+    @DBRef(lazy = true)
     private List<Tarefa> tarefas;
 
     public static Usuario fromDTO(UsuarioDTO dto) {

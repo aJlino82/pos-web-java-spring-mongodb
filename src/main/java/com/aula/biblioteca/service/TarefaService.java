@@ -19,6 +19,7 @@ public class TarefaService {
 
     public TarefaDTO create(TarefaDTO tarefaDTO) {
         Tarefa tarefa = Tarefa.fromDTO(tarefaDTO);
+        tarefa.setAtiva();
         return new TarefaDTO(tarefaRepository.save(tarefa));
     }
 
@@ -28,8 +29,8 @@ public class TarefaService {
     }
 
     public TarefaDTO update(String id, TarefaDTO tarefaDTO) {
-        Tarefa tarefa = findTarefaById(id);
-        tarefa.fromDTO(tarefaDTO);
+        Tarefa tarefa = Tarefa.fromDTO(tarefaDTO);
+        tarefa.setId(id);
         return new TarefaDTO(tarefaRepository.save(tarefa));
     }
 

@@ -53,4 +53,9 @@ public class Tarefa {
         this.concluida = true;
         this.dataConclusao = LocalDate.now();
     }
+
+    public void setAtiva() {
+        this.concluida = false;
+        this.dataConclusao = null;
+    }
 }

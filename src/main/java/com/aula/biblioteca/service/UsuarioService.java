@@ -27,8 +27,8 @@ public class UsuarioService {
     }
 
     public UsuarioDTO update(String id, UsuarioDTO usuarioDTO) {
-        Usuario usuario = findUsuarioById(id);
-        usuario.fromDTO(usuarioDTO);
+        Usuario usuario = Usuario.fromDTO(usuarioDTO);
+        usuario.setId(id);
         return new UsuarioDTO(usuarioRepository.save(usuario));
     }
 

@@ -37,8 +37,8 @@ public class UsuarioController {
 
     @Operation(summary = "atualizar um usuario", description = "atualizar um usuario buscando por id")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UsuarioDTO> update(@Parameter(required = true) UsuarioDTO usuarioDTO) {
-        return ResponseEntity.ok(usuarioService.update(usuarioDTO.id(), usuarioDTO));
+    public ResponseEntity<UsuarioDTO> update(@PathVariable String id, @RequestBody UsuarioDTO usuarioDTO) {
+        return ResponseEntity.ok(usuarioService.update(id, usuarioDTO));
     }
 
     @Operation(summary = "apagar usuario", description = "apagar um usuario buscando por id")
