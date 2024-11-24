@@ -50,4 +50,20 @@ public class Tarefa {
     public void reativarTarefa() {
         this.concluida = false;
     }
+
+    public void atualizarDados(TarefaDTO dto) {
+        if (dto.titulo() != null) {
+            this.titulo = dto.titulo();
+        }
+        if (dto.descricao() != null) {
+            this.descricao = dto.descricao();
+        }
+        if (dto.prioridade() != null) {
+            this.prioridade = dto.prioridade();
+        }
+        if (dto.concluida() != null) {
+            this.concluida = dto.concluida();
+        }
+    }
+
 }

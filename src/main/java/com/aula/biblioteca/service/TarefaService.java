@@ -25,7 +25,7 @@ public class TarefaService {
 
     public TarefaDTO update(String id, TarefaDTO tarefaDTO) {
         Tarefa tarefa = findTarefaById(id);
-        tarefa.fromDTO(tarefaDTO);
+        tarefa.atualizarDados(tarefaDTO);
         return new TarefaDTO(tarefaRepository.save(tarefa));
     }
 
