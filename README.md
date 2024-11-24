@@ -1,6 +1,6 @@
 ## Sistema de Gerenciamento de Usuários, Tarefas, Autores e Livros
 
-Este sistema foi desenvolvido como parte de um projeto acadêmico, com o objetivo de gerenciar usuários, tarefas, autores e livros em uma plataforma utilizando Java, Spring Boot e MongoDB.
+Este sistema foi desenvolvido como parte de um projeto acadêmico da pós graduação de sistemas web do unipe na disciplina de Programação back-end II do professor Thiago Rodrigues, com o objetivo de gerenciar usuários, tarefas, autores e livros em uma plataforma utilizando Java, Spring Boot e MongoDB.
 Funcionalidades principais:
 
     Gerenciamento de Usuários:
