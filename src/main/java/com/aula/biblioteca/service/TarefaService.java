@@ -3,23 +3,24 @@ package com.aula.biblioteca.service;
 import com.aula.biblioteca.dto.TarefaDTO;
 import com.aula.biblioteca.model.Tarefa;
 import com.aula.biblioteca.repository.TarefaRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
 
     public TarefaDTO create(TarefaDTO tarefaDTO) {
         Tarefa tarefa = Tarefa.fromDTO(tarefaDTO);
-        tarefa.setAtiva();
+        tarefa.reativarTarefa();
         return new TarefaDTO(tarefaRepository.save(tarefa));
     }
 
@@ -29,14 +30,14 @@ public class TarefaService {
     }
 
     public TarefaDTO update(String id, TarefaDTO tarefaDTO) {
-        Tarefa tarefa = Tarefa.fromDTO(tarefaDTO);
-        tarefa.setId(id);
+        Tarefa tarefa = findTarefaById(id);
+        tarefa.fromDTO(tarefaDTO);
         return new TarefaDTO(tarefaRepository.save(tarefa));
     }
 
     public void delete(String id) {
         Tarefa tarefa = findTarefaById(id);
-        tarefa.setConcluida();
+        tarefa.concluirTarefa();
         tarefaRepository.save(tarefa);
     }
 
@@ -44,22 +45,23 @@ public class TarefaService {
         return tarefaRepository.findAll(pageable).map(TarefaDTO::new);
     }
 
-    public List<Tarefa> findAtivas() {
-        return tarefaRepository.findByConcluidaFalse();
+    public List<TarefaDTO> findAtivas() {
+        return tarefaRepository.findByConcluidaFalse()
+                .stream()
+                .map(TarefaDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public List<Tarefa> findConcluida() {
-        return tarefaRepository.findByConcluidaTrue();
+    public List<TarefaDTO> findConcluidas() {
+        return tarefaRepository.findByConcluidaTrue()
+                .stream()
+                .map(TarefaDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public List<Tarefa> findByUsuariosAndConcluidaTrue(String id) {
-        return tarefaRepository.findByUsuariosAndConcluidaTrue(id);
-    }
-
-    // Metodo utilitário privado para reduzir repetição de código.
+    //Metodo utilitário para buscar uma tarefa pelo ID.
     private Tarefa findTarefaById(String id) {
         return tarefaRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Autor com ID '" + id + "' não encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Tarefa com ID '" + id + "' não encontrada"));
     }
-
 }

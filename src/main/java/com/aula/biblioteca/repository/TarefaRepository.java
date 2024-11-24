@@ -20,6 +20,4 @@ public interface TarefaRepository extends MongoRepository<Tarefa, String> {
 
     List<Tarefa> findByConcluidaTrue();
 
-    List<Tarefa> findByUsuariosAndConcluidaTrue(String id);
-
 }

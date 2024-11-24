@@ -1,61 +1,53 @@
 package com.aula.biblioteca.model;
 
 import com.aula.biblioteca.dto.TarefaDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Data
 @Document(collection = "tarefas")
 public class Tarefa {
 
     @Id
     private String id;
-    private String titulo;
-    private String descricao;
-    @CreatedDate()
-    private LocalDate dataCriacao;
-    private String prioridade;
-    private Boolean concluida;
-    private LocalDate dataConclusao;
 
-    @JsonIgnore
-    @DBRef
-    List<Usuario> usuarios;
+    @NotNull(message = "O título da tarefa não pode ser nulo.")
+    private String titulo;
+
+    private String descricao;
+
+    @CreatedDate
+    private LocalDate dataCriacao;
+
+    private String prioridade;
+
+    private Boolean concluida = false;
 
     public static Tarefa fromDTO(TarefaDTO dto) {
-        return new Tarefa
-                (
-                        null,
-                        dto.titulo(),
-                        dto.descricao(),
-                        dto.dataCriacao(),
-                        dto.prioridade(),
-                        dto.concluida(),
-                        dto.dataConclusao(),
-                        dto.usuarios()
-                );
+        return new Tarefa(
+                null,
+                dto.titulo(),
+                dto.descricao(),
+                null, // Será inicializado automaticamente
+                dto.prioridade(),
+                dto.concluida() != null ? dto.concluida() : false
+        );
     }
 
-    public void setConcluida() {
+    public void concluirTarefa() {
         this.concluida = true;
-        this.dataConclusao = LocalDate.now();
     }
 
-    public void setAtiva() {
+    public void reativarTarefa() {
         this.concluida = false;
-        this.dataConclusao = null;
     }
 }
