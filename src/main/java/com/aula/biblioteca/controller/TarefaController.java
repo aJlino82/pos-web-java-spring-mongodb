@@ -26,12 +26,6 @@ public class TarefaController {
 
     private final TarefaService tarefaService;
 
-    @Operation(summary = "Criar uma nova tarefa", description = "Cria uma nova tarefa com os dados fornecidos")
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TarefaDTO> create(@Parameter(required = true) @RequestBody TarefaDTO tarefaDTO) {
-        return ResponseEntity.ok(tarefaService.create(tarefaDTO));
-    }
-
     @Operation(summary = "Ler tarefa", description = "Busca uma tarefa pelo ID")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TarefaDTO> read(@PathVariable String id) {

@@ -18,12 +18,6 @@ public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
 
-    public TarefaDTO create(TarefaDTO tarefaDTO) {
-        Tarefa tarefa = Tarefa.fromDTO(tarefaDTO);
-        tarefa.reativarTarefa();
-        return new TarefaDTO(tarefaRepository.save(tarefa));
-    }
-
     public TarefaDTO read(String id) {
         Tarefa tarefa = findTarefaById(id);
         return new TarefaDTO(tarefa);
